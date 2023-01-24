@@ -1,6 +1,9 @@
 package testbase;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+
+import org.checkerframework.checker.units.qual.C;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TestBase {
-    private WebDriver driver;
+    protected WebDriver driver = new ChromeDriver();
     private Logger logger = LoggerFactory.getLogger("TestBase.class");
 
     public WebDriver getDriver() {
@@ -19,8 +22,8 @@ public class TestBase {
 
     @BeforeEach
     public void setup() {
-        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
+        WebDriverManager.chromedriver().setup();
         options.addArguments("start-maximized");
         driver = new ChromeDriver(options);
         logger.info("-------------------------- Setup driver complete --------------------------");
@@ -29,6 +32,7 @@ public class TestBase {
     @AfterEach
     public void tearDown() {
         driver.quit();
+        logger.info("---------- Ending test ----------");
         logger.info("-------------------------- Driver quit complete --------------------------");
     }
 }
